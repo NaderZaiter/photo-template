@@ -1,1 +1,15 @@
 <h1 class="visually-hidden">Photo</h1>
+
+<figure class="photo-detail">
+  <img class="photo-detail__image" [src]="imageUrl()" [alt]="'Photo ' + id()" />
+</figure>
+
+<div class="photo-detail__actions">
+  @if (isFavorite()) {
+    <button matButton="filled" type="button" (click)="removeFromFavorites()">
+      Remove from favorites
+    </button>
+  } @else {
+    <p class="photo-detail__note">This photo is not in your favorites.</p>
+  }
+</div>

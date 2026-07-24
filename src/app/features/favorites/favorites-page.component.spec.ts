@@ -1,8 +1,10 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router, provideRouter } from '@angular/router';
 
 import { FavoritesPageComponent } from './favorites-page.component';
 import { FavoritesService } from '../../core/services/favorites.service';
+import { APP_PATHS } from '../../core/constants/app-routes.constants';
 import { Photo } from '../../core/models/photo.model';
 
 describe('FavoritesPageComponent', () => {
@@ -12,7 +14,7 @@ describe('FavoritesPageComponent', () => {
     favorites.set([]);
     TestBed.configureTestingModule({
       imports: [FavoritesPageComponent],
-      providers: [{ provide: FavoritesService, useValue: { favorites } }],
+      providers: [provideRouter([]), { provide: FavoritesService, useValue: { favorites } }],
     });
   });
 
@@ -33,5 +35,16 @@ describe('FavoritesPageComponent', () => {
     favorites.set([]);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('app-photo-card').length).toBe(0);
+  });
+
+  it('should open the photo detail when a favorite is clicked', () => {
+    favorites.set([{ id: 'seed-1' }]);
+    const fixture = TestBed.createComponent(FavoritesPageComponent);
+    fixture.detectChanges();
+    const navigate = spyOn(TestBed.inject(Router), 'navigateByUrl');
+
+    (fixture.nativeElement.querySelector('app-photo-card button') as HTMLButtonElement).click();
+
+    expect(navigate).toHaveBeenCalledWith(APP_PATHS.photoDetail('seed-1'));
   });
 });

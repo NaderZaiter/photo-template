@@ -1,0 +1,26 @@
+.photo-detail {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.photo-detail__image {
+  display: block;
+  max-width: 100%;
+  // Keep the photo and the action visible without scrolling:
+  // viewport minus toolbar, page paddings and action row.
+  max-height: calc(100vh - 220px);
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.photo-detail__actions {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.photo-detail__note {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
