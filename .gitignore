@@ -58,7 +58,6 @@ nbbuild/
 nbdist/
 nbproject/private/
 ### VisualStudioCode ###
-!.vscode/60f69
 *.code-workspace
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -67,10 +66,3 @@ nbproject/private/
 node_modules
 .npm-debug.log
 tmp
-
-
-
-
-###
-###                                                                                                                                                                                                                                  git#397161
-###

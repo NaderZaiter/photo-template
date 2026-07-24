@@ -1,27 +1,47 @@
-# GalleryTemplate
+# Photo Library
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.8.
+Angular 22 photo library with an infinite random photostream and a persistent Favorites collection.
 
-## Development server
+## Requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js 24+ (see `.nvmrc`)
 
-## Code scaffolding
+## Getting started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+nvm use
+npm install
+npm start
+```
 
-## Build
+Open [http://localhost:4200](http://localhost:4200).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+| Command | Description |
+| --- | --- |
+| `npm start` | Dev server |
+| `npm test -- --watch=false` | Unit tests |
+| `npm run build` | Production build |
 
-## Running unit tests
+## Features
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Photos** (`/`) — infinite scroll with a simulated API delay (200–300 ms). Click a photo to add it to Favorites.
+- **Favorites** (`/favorites`) — saved photos, persisted in `localStorage`. Click to open the detail view.
+- **Photo detail** (`/photos/:id`) — full-size photo with remove-from-favorites.
 
-## Running end-to-end tests
+## Stack
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Angular 22 (standalone, signals, zoneless)
+- Angular Material 22
+- SCSS
+- Karma + Jasmine
 
-## Further help
+## Architecture
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+src/app/
+├── core/        # Models, route constants, PhotoService, FavoritesService
+├── features/    # Lazy-loaded pages: photos, favorites, photo-detail
+└── shared/      # Header, PhotoCard, PhotoGrid, InfiniteScrollDirective
+```
+
+Photos come from [picsum.photos](https://picsum.photos/) using stable seed IDs. Infinite scroll is a custom `IntersectionObserver` directive (no third-party libraries). Favorites state uses signals and survives page refresh via `localStorage`.
