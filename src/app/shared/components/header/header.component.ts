@@ -5,10 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { APP_PATHS } from '../../../core/constants/app-routes.constants';
 
-/**
- * Application header with the two main navigation actions.
- * The active view is derived from the URL via `routerLinkActive`.
- */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

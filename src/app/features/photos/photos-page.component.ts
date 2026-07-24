@@ -12,13 +12,6 @@ import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll
 
 const SNACK_BAR_DURATION_MS = 2000;
 
-/**
- * Infinite random photostream.
- *
- * Loading is driven entirely by the sentinel at the bottom of the grid: it is
- * visible on first paint (initial batch) and keeps triggering new batches
- * while the user scrolls.
- */
 @Component({
   selector: 'app-photos-page',
   templateUrl: './photos-page.component.html',
@@ -55,9 +48,7 @@ export class PhotosPageComponent {
       )
       .subscribe({
         next: (batch) => this.photos.update((current) => [...current, ...batch]),
-        error: () => {
-          // Keep the stream failure local so the sentinel can retry.
-        },
+        error: () => {},
       });
   }
 }

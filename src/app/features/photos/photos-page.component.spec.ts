@@ -7,7 +7,6 @@ import { PhotoService } from '../../core/services/photo.service';
 import { FavoritesService } from '../../core/services/favorites.service';
 import { Photo } from '../../core/models/photo.model';
 
-/** Keeps the real IntersectionObserver out of the page tests. */
 class NoopIntersectionObserver {
   public observe(): void {}
   public disconnect(): void {}

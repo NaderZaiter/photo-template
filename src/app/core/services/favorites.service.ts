@@ -4,21 +4,12 @@ import { Photo } from '../models/photo.model';
 
 const STORAGE_KEY = 'photo-library.favorites';
 
-/**
- * Holds the favorites library as a signal and persists it to localStorage,
- * so the list survives page reloads without any backend.
- */
 @Injectable({ providedIn: 'root' })
 export class FavoritesService {
   private readonly favoritesSignal = signal<Photo[]>(this.loadFavorites());
 
-  /** Read-only view of the favorites library, newest last. */
   public readonly favorites = this.favoritesSignal.asReadonly();
 
-  /**
-   * Adds a photo to the library.
-   * Returns false (and leaves the library untouched) if it is already there.
-   */
   public add(photo: Photo): boolean {
     if (this.has(photo.id)) {
       return false;
@@ -44,7 +35,6 @@ export class FavoritesService {
     return this.favoritesSignal().some((favorite) => favorite.id === id);
   }
 
-  /** Defensive read: any missing, corrupt or unexpected payload yields []. */
   private loadFavorites(): Photo[] {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);

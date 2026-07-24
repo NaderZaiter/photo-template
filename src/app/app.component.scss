@@ -1,7 +1,5 @@
 .app-content {
   max-width: 1200px;
   margin: 0 auto;
-  // Fluid page gutters: never glued to the edges on mobile,
-  // comfortable breathing room on desktop.
   padding: clamp(20px, 4vw, 32px) clamp(16px, 4vw, 32px) 48px;
 }

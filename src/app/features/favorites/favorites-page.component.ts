@@ -7,7 +7,6 @@ import { FavoritesService } from '../../core/services/favorites.service';
 import { APP_PATHS } from '../../core/constants/app-routes.constants';
 import { PhotoGridComponent } from '../../shared/components/photo-grid/photo-grid.component';
 
-/** Favorites library: every saved photo, no infinite scrolling. */
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',

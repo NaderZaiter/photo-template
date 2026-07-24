@@ -7,18 +7,9 @@ import { photoUrl } from '../../core/models/photo.model';
 import { FavoritesService } from '../../core/services/favorites.service';
 import { APP_PATHS } from '../../core/constants/app-routes.constants';
 
-/** Detail size keeps the 2:3 ratio of the grid thumbnails, at higher resolution. */
 const DETAIL_WIDTH = 800;
 const DETAIL_HEIGHT = 1200;
 
-/**
- * Single full-screen photo.
- *
- * The `id` route parameter is bound as a component input
- * (`withComponentInputBinding`). The photo always renders — the seed resolves
- * at any resolution — but the remove action is only offered while the photo
- * is part of the favorites library.
- */
 @Component({
   selector: 'app-photo-detail-page',
   templateUrl: './photo-detail-page.component.html',
@@ -31,7 +22,6 @@ export class PhotoDetailPageComponent {
   private readonly router = inject(Router);
   private readonly favoritesService = inject(FavoritesService);
 
-  /** The browser download of the full-size image, not an API call. */
   protected readonly isImageLoaded = signal(false);
 
   protected readonly imageUrl = computed(() =>
