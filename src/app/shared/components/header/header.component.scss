@@ -3,12 +3,16 @@
   top: 0;
   z-index: 10;
   border-bottom: 1px solid var(--mat-sys-outline-variant);
-  background-color: var(--mat-sys-surface);
+  // Slightly translucent surface so scrolled content hints through,
+  // keeping the toolbar light and unobtrusive.
+  background-color: color-mix(in srgb, var(--mat-sys-surface) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .header__nav {
   display: flex;
-  gap: 48px;
+  gap: clamp(24px, 6vw, 48px);
   justify-content: center;
   width: 100%;
 }
@@ -16,4 +20,7 @@
 .header__link--active {
   background-color: var(--mat-sys-secondary-container);
   color: var(--mat-sys-on-secondary-container);
+  // Weight change keeps the active state readable without relying on
+  // color alone (aria-current already marks it for assistive tech).
+  font-weight: 600;
 }

@@ -17,6 +17,10 @@ const THUMB_HEIGHT = 300;
 })
 export class PhotoCardComponent {
   public readonly photo = input.required<Photo>();
+
+  /** Accessible name describing what clicking the card does on this page. */
+  public readonly actionLabel = input('Select photo');
+
   public readonly selected = output<Photo>();
 
   protected readonly imageUrl = computed(() =>

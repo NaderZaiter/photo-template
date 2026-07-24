@@ -1,3 +1,15 @@
 <h1 class="visually-hidden">Favorites</h1>
 
-<app-photo-grid [photos]="favorites()" (photoSelected)="openPhoto($event)" />
+@if (favorites().length === 0) {
+  <div class="favorites-page__empty">
+    <p class="favorites-page__empty-message">No favorites yet.</p>
+    <p>Click any photo in the photostream to save it here.</p>
+    <a matButton="filled" [routerLink]="paths.photos">Browse photos</a>
+  </div>
+} @else {
+  <app-photo-grid
+    [photos]="favorites()"
+    cardActionLabel="Open photo"
+    (photoSelected)="openPhoto($event)"
+  />
+}

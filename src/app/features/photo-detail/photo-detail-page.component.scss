@@ -1,26 +1,50 @@
+// Editorial, centered composition: the photo is the protagonist,
+// the action sits right below it at a constrained width.
 .photo-detail {
+  max-width: 760px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
-  margin: 0;
 }
 
 .photo-detail__image {
   display: block;
+  // Let the box hug the actual image: no letterboxing background,
+  // just the photo with its own rounded corners and shadow.
+  width: auto;
+  height: auto;
   max-width: 100%;
-  // Keep the photo and the action visible without scrolling:
-  // viewport minus toolbar, page paddings and action row.
-  max-height: calc(100vh - 220px);
-  border-radius: 8px;
-  object-fit: contain;
+  // Keep photo and action visible together without scrolling.
+  max-height: min(72vh, 960px);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-rest);
+}
+
+// Placeholder with the same footprint the photo will take,
+// so the layout does not jump when the download finishes.
+.photo-detail__loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min(72vh, 960px);
+  aspect-ratio: 2 / 3;
+  max-width: 100%;
+  border-radius: var(--app-radius);
+  background: var(--mat-sys-surface-container-low);
+}
+
+.photo-detail__image--hidden {
+  display: none;
 }
 
 .photo-detail__actions {
   display: flex;
   justify-content: center;
-  padding: 24px 0;
+  padding: 24px 0 8px;
 }
 
 .photo-detail__note {
   margin: 0;
+  font: var(--mat-sys-body-medium);
   color: var(--mat-sys-on-surface-variant);
 }

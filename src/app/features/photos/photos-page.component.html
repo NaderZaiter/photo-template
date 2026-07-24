@@ -1,6 +1,10 @@
 <h1 class="visually-hidden">Photos</h1>
 
-<app-photo-grid [photos]="photos()" (photoSelected)="addToFavorites($event)" />
+<app-photo-grid
+  [photos]="photos()"
+  cardActionLabel="Add photo to favorites"
+  (photoSelected)="addToFavorites($event)"
+/>
 
 <div
   class="photos-page__sentinel"

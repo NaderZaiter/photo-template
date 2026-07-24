@@ -2,17 +2,20 @@
   display: block;
   width: 100%;
   padding: 0;
-  border: 0;
-  border-radius: 8px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--app-radius);
   overflow: hidden;
   cursor: pointer;
   background: var(--mat-sys-surface-container);
-  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: var(--app-shadow-rest);
+  transition:
+    transform 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 
   &:hover,
   &:focus-visible {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.25);
+    box-shadow: var(--app-shadow-lifted);
   }
 
   &:focus-visible {
@@ -27,4 +30,15 @@
   height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-card {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
 }

@@ -38,6 +38,18 @@ describe('PhotoDetailPageComponent', () => {
     expect(img.getAttribute('src')).toBe('https://picsum.photos/seed/seed-1/800/1200');
   });
 
+  it('should show a spinner until the image finishes loading', () => {
+    const fixture = setup('seed-1', true);
+    expect(fixture.nativeElement.querySelector('mat-progress-spinner')).not.toBeNull();
+
+    const img = fixture.nativeElement.querySelector('img') as HTMLImageElement;
+    img.dispatchEvent(new Event('load'));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('mat-progress-spinner')).toBeNull();
+    expect(img.classList).not.toContain('photo-detail__image--hidden');
+  });
+
   it('should offer the remove action while the photo is a favorite', () => {
     const fixture = setup('seed-1', true);
 

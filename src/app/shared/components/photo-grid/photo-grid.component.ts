@@ -12,5 +12,9 @@ import { PhotoCardComponent } from '../photo-card/photo-card.component';
 })
 export class PhotoGridComponent {
   public readonly photos = input.required<Photo[]>();
+
+  /** Accessible name forwarded to every card. */
+  public readonly cardActionLabel = input('Select photo');
+
   public readonly photoSelected = output<Photo>();
 }

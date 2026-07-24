@@ -1,7 +1,18 @@
 <h1 class="visually-hidden">Photo</h1>
 
 <figure class="photo-detail">
-  <img class="photo-detail__image" [src]="imageUrl()" [alt]="'Photo ' + id()" />
+  @if (!isImageLoaded()) {
+    <div class="photo-detail__loader" role="status" aria-label="Loading photo">
+      <mat-progress-spinner mode="indeterminate" [diameter]="40" />
+    </div>
+  }
+  <img
+    class="photo-detail__image"
+    [class.photo-detail__image--hidden]="!isImageLoaded()"
+    [src]="imageUrl()"
+    [alt]="'Photo ' + id()"
+    (load)="isImageLoaded.set(true)"
+  />
 </figure>
 
 <div class="photo-detail__actions">

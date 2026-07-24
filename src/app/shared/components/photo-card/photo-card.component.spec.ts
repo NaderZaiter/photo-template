@@ -20,6 +20,15 @@ describe('PhotoCardComponent', () => {
     expect(img.getAttribute('src')).toBe('https://picsum.photos/seed/seed-123/200/300');
   });
 
+  it('should expose the configured action as the accessible name', () => {
+    const fixture = setup();
+    fixture.componentRef.setInput('actionLabel', 'Add photo to favorites');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    expect(button.getAttribute('aria-label')).toBe('Add photo to favorites');
+  });
+
   it('should emit the photo when clicked', () => {
     const fixture = setup();
     let selected: Photo | undefined;

@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 import { Photo } from '../../core/models/photo.model';
 import { FavoritesService } from '../../core/services/favorites.service';
@@ -11,13 +12,14 @@ import { PhotoGridComponent } from '../../shared/components/photo-grid/photo-gri
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
   styleUrls: ['./favorites-page.component.scss'],
-  imports: [PhotoGridComponent],
+  imports: [PhotoGridComponent, MatButtonModule, RouterLink],
 })
 export class FavoritesPageComponent {
   private readonly favoritesService = inject(FavoritesService);
   private readonly router = inject(Router);
 
   protected readonly favorites = this.favoritesService.favorites;
+  protected readonly paths = APP_PATHS;
 
   protected openPhoto(photo: Photo): void {
     this.router.navigateByUrl(APP_PATHS.photoDetail(photo.id));

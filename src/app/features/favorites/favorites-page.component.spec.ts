@@ -18,6 +18,16 @@ describe('FavoritesPageComponent', () => {
     });
   });
 
+  it('should show an empty state with a link to the photostream when there are no favorites', () => {
+    const fixture = TestBed.createComponent(FavoritesPageComponent);
+    fixture.detectChanges();
+
+    const empty = fixture.nativeElement.querySelector('.favorites-page__empty');
+    expect(empty?.textContent).toContain('No favorites yet');
+    expect(empty?.querySelector('a')?.getAttribute('href')).toBe(APP_PATHS.photos);
+    expect(fixture.nativeElement.querySelector('app-photo-grid')).toBeNull();
+  });
+
   it('should render one card per favorite photo', () => {
     favorites.set([{ id: 'a' }, { id: 'b' }]);
     const fixture = TestBed.createComponent(FavoritesPageComponent);
