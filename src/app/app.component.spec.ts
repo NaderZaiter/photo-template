@@ -16,10 +16,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render the router outlet', () => {
+  it('should render the header and the router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-header')).not.toBeNull();
     expect(compiled.querySelector('router-outlet')).not.toBeNull();
   });
 });

@@ -1,0 +1,23 @@
+<mat-toolbar class="header">
+  <nav class="header__nav" aria-label="Main navigation">
+    <a
+      matButton
+      [routerLink]="paths.photos"
+      routerLinkActive="header__link--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+      class="header__link"
+    >
+      Photos
+    </a>
+    <a
+      matButton
+      [routerLink]="paths.favorites"
+      routerLinkActive="header__link--active"
+      ariaCurrentWhenActive="page"
+      class="header__link"
+    >
+      Favorites
+    </a>
+  </nav>
+</mat-toolbar>
