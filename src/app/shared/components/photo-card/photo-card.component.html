@@ -1,0 +1,10 @@
+<button type="button" class="photo-card" (click)="selected.emit(photo())">
+  <img
+    class="photo-card__image"
+    [src]="imageUrl()"
+    [alt]="'Photo ' + photo().id"
+    width="200"
+    height="300"
+    loading="lazy"
+  />
+</button>

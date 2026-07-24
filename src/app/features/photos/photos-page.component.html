@@ -1,1 +1,17 @@
 <h1 class="visually-hidden">Photos</h1>
+
+<app-photo-grid [photos]="photos()" />
+
+<div
+  class="photos-page__sentinel"
+  aria-hidden="true"
+  appInfiniteScroll
+  [appInfiniteScrollDisabled]="isLoading()"
+  (appInfiniteScroll)="loadMore()"
+></div>
+
+@if (isLoading()) {
+  <div class="photos-page__loader" role="status" aria-label="Loading more photos">
+    <mat-progress-spinner mode="indeterminate" [diameter]="40" />
+  </div>
+}

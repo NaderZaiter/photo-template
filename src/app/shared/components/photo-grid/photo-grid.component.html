@@ -1,0 +1,7 @@
+<ul class="photo-grid">
+  @for (photo of photos(); track photo.id) {
+    <li class="photo-grid__item">
+      <app-photo-card [photo]="photo" (selected)="photoSelected.emit($event)" />
+    </li>
+  }
+</ul>

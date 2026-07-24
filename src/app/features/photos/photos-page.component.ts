@@ -1,9 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-/** Infinite random photostream. Implemented in the photos feature slice. */
+import { Photo } from '../../core/models/photo.model';
+import { PhotoService } from '../../core/services/photo.service';
+import { PhotoGridComponent } from '../../shared/components/photo-grid/photo-grid.component';
+import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
+
+/**
+ * Infinite random photostream.
+ *
+ * Loading is driven entirely by the sentinel at the bottom of the grid: it is
+ * visible on first paint (initial batch) and keeps triggering new batches
+ * while the user scrolls.
+ */
 @Component({
   selector: 'app-photos-page',
   templateUrl: './photos-page.component.html',
   styleUrls: ['./photos-page.component.scss'],
+  imports: [MatProgressSpinnerModule, PhotoGridComponent, InfiniteScrollDirective],
 })
-export class PhotosPageComponent {}
+export class PhotosPageComponent {
+  private readonly photoService = inject(PhotoService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly photos = signal<Photo[]>([]);
+  protected readonly isLoading = signal(false);
+
+  protected loadMore(): void {
+    if (this.isLoading()) {
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.photoService
+      .getPhotos()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.isLoading.set(false)),
+      )
+      .subscribe({
+        next: (batch) => this.photos.update((current) => [...current, ...batch]),
+        error: () => {
+          // Keep the stream failure local so the sentinel can retry.
+        },
+      });
+  }
+}
