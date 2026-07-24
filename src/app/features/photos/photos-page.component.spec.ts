@@ -1,19 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 
 import { PhotosPageComponent } from './photos-page.component';
 import { PhotoService } from '../../core/services/photo.service';
+import { FavoritesService } from '../../core/services/favorites.service';
 import { Photo } from '../../core/models/photo.model';
 
 /** Keeps the real IntersectionObserver out of the page tests. */
 class NoopIntersectionObserver {
-  observe(): void {}
-  disconnect(): void {}
+  public observe(): void {}
+  public disconnect(): void {}
 }
 
 describe('PhotosPageComponent', () => {
   let fixture: ComponentFixture<PhotosPageComponent>;
   let photoService: jasmine.SpyObj<PhotoService>;
+  let favoritesService: jasmine.SpyObj<FavoritesService>;
+  let snackBar: jasmine.SpyObj<MatSnackBar>;
   let batches: Subject<Photo[]>;
   const originalIntersectionObserver = window.IntersectionObserver;
 
@@ -24,10 +28,16 @@ describe('PhotosPageComponent', () => {
     batches = new Subject<Photo[]>();
     photoService = jasmine.createSpyObj<PhotoService>('PhotoService', ['getPhotos']);
     photoService.getPhotos.and.callFake(() => batches.asObservable());
+    favoritesService = jasmine.createSpyObj<FavoritesService>('FavoritesService', ['add']);
+    snackBar = jasmine.createSpyObj<MatSnackBar>('MatSnackBar', ['open']);
 
     TestBed.configureTestingModule({
       imports: [PhotosPageComponent],
-      providers: [{ provide: PhotoService, useValue: photoService }],
+      providers: [
+        { provide: PhotoService, useValue: photoService },
+        { provide: FavoritesService, useValue: favoritesService },
+        { provide: MatSnackBar, useValue: snackBar },
+      ],
     });
 
     fixture = TestBed.createComponent(PhotosPageComponent);
@@ -47,6 +57,11 @@ describe('PhotosPageComponent', () => {
     batches.next(photos);
     batches.complete();
     batches = new Subject<Photo[]>();
+    fixture.detectChanges();
+  }
+
+  function clickFirstCard(): void {
+    (fixture.nativeElement.querySelector('app-photo-card button') as HTMLButtonElement).click();
     fixture.detectChanges();
   }
 
@@ -92,5 +107,34 @@ describe('PhotosPageComponent', () => {
     loadMore();
 
     expect(photoService.getPhotos).toHaveBeenCalledTimes(1);
+  });
+
+  it('should add the clicked photo to favorites and confirm it', () => {
+    favoritesService.add.and.returnValue(true);
+    loadMore();
+    emitBatch([{ id: 'a' }]);
+
+    clickFirstCard();
+
+    expect(favoritesService.add).toHaveBeenCalledWith({ id: 'a' });
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'Added to favorites',
+      undefined,
+      jasmine.objectContaining({ duration: jasmine.any(Number) }),
+    );
+  });
+
+  it('should warn when the clicked photo is already a favorite', () => {
+    favoritesService.add.and.returnValue(false);
+    loadMore();
+    emitBatch([{ id: 'a' }]);
+
+    clickFirstCard();
+
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'Already in favorites',
+      undefined,
+      jasmine.objectContaining({ duration: jasmine.any(Number) }),
+    );
   });
 });

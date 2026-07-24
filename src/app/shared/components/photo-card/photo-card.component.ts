@@ -16,8 +16,8 @@ const THUMB_HEIGHT = 300;
   styleUrls: ['./photo-card.component.scss'],
 })
 export class PhotoCardComponent {
-  readonly photo = input.required<Photo>();
-  readonly selected = output<Photo>();
+  public readonly photo = input.required<Photo>();
+  public readonly selected = output<Photo>();
 
   protected readonly imageUrl = computed(() =>
     photoUrl(this.photo().id, THUMB_WIDTH, THUMB_HEIGHT),

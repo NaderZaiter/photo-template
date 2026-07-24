@@ -26,10 +26,10 @@ import {
 @Directive({ selector: '[appInfiniteScroll]' })
 export class InfiniteScrollDirective implements OnInit {
   /** Blocks emissions while the consumer is loading a batch. */
-  readonly disabled = input(false, { alias: 'appInfiniteScrollDisabled' });
+  public readonly disabled = input(false, { alias: 'appInfiniteScrollDisabled' });
 
   /** Fired when more content should be loaded. */
-  readonly loadMore = output<void>({ alias: 'appInfiniteScroll' });
+  public readonly loadMore = output<void>({ alias: 'appInfiniteScroll' });
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -43,7 +43,7 @@ export class InfiniteScrollDirective implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const observer = new IntersectionObserver(
       (entries) => {
         const isVisible = entries.some((entry) => entry.isIntersecting);

@@ -4,24 +4,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InfiniteScrollDirective } from './infinite-scroll.directive';
 
 class MockIntersectionObserver {
-  static instances: MockIntersectionObserver[] = [];
+  public static instances: MockIntersectionObserver[] = [];
 
-  readonly observed: Element[] = [];
-  isDisconnected = false;
+  public readonly observed: Element[] = [];
+  public isDisconnected = false;
 
   constructor(private readonly callback: IntersectionObserverCallback) {
     MockIntersectionObserver.instances.push(this);
   }
 
-  observe(element: Element): void {
+  public observe(element: Element): void {
     this.observed.push(element);
   }
 
-  disconnect(): void {
+  public disconnect(): void {
     this.isDisconnected = true;
   }
 
-  trigger(isIntersecting: boolean): void {
+  public trigger(isIntersecting: boolean): void {
     this.callback(
       [{ isIntersecting } as IntersectionObserverEntry],
       this as unknown as IntersectionObserver,
@@ -39,8 +39,8 @@ class MockIntersectionObserver {
   imports: [InfiniteScrollDirective],
 })
 class HostComponent {
-  readonly isDisabled = signal(false);
-  emissions = 0;
+  public readonly isDisabled = signal(false);
+  public emissions = 0;
 }
 
 describe('InfiniteScrollDirective', () => {

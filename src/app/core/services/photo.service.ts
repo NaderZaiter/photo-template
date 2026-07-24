@@ -15,7 +15,7 @@ const MAX_API_DELAY_MS = 300;
  */
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
-  getPhotos(count = PHOTO_BATCH_SIZE): Observable<Photo[]> {
+  public getPhotos(count = PHOTO_BATCH_SIZE): Observable<Photo[]> {
     const photos: Photo[] = Array.from({ length: count }, () => ({
       id: crypto.randomUUID(),
     }));

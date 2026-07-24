@@ -11,6 +11,6 @@ import { PhotoCardComponent } from '../photo-card/photo-card.component';
   imports: [PhotoCardComponent],
 })
 export class PhotoGridComponent {
-  readonly photos = input.required<Photo[]>();
-  readonly photoSelected = output<Photo>();
+  public readonly photos = input.required<Photo[]>();
+  public readonly photoSelected = output<Photo>();
 }
