@@ -3,5 +3,5 @@ export interface Photo {
 }
 
 export function photoUrl(id: string, width: number, height: number): string {
-  return `https://picsum.photos/seed/${id}/${width}/${height}`;
+  return `https://picsum.photos/seed/${encodeURIComponent(id)}/${width}/${height}`;
 }

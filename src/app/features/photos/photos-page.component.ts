@@ -48,7 +48,7 @@ export class PhotosPageComponent {
       )
       .subscribe({
         next: (batch) => this.photos.update((current) => [...current, ...batch]),
-        error: () => {},
+        error: () => undefined,
       });
   }
 }

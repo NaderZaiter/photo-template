@@ -19,8 +19,10 @@ Open [http://localhost:4200](http://localhost:4200).
 | Command | Description |
 | --- | --- |
 | `npm start` | Dev server |
-| `npm test -- --watch=false` | Unit tests |
+| `npm test` | Unit tests (watch mode) |
+| `npm run test:ci` | Unit tests once (headless) |
 | `npm run build` | Production build |
+| `npm run lint` | ESLint |
 
 ## Features
 
@@ -30,9 +32,11 @@ Open [http://localhost:4200](http://localhost:4200).
 
 ## Stack
 
-- Angular 22 (standalone, signals, zoneless)
-- Angular Material 22
-- SCSS
+- **Angular 22** — standalone components, signals, zoneless change detection
+- **Angular Material 22**
+- **SCSS**
+- Lazy-loaded routes
+- Custom infinite scroll via `IntersectionObserver` (no third-party libraries)
 - Karma + Jasmine
 
 ## Architecture
@@ -44,4 +48,4 @@ src/app/
 └── shared/      # Header, PhotoCard, PhotoGrid, InfiniteScrollDirective
 ```
 
-Photos come from [picsum.photos](https://picsum.photos/) using stable seed IDs. Infinite scroll is a custom `IntersectionObserver` directive (no third-party libraries). Favorites state uses signals and survives page refresh via `localStorage`.
+Photos come from [picsum.photos](https://picsum.photos/) using stable seed IDs. Favorites state uses signals and survives page refresh via `localStorage`.

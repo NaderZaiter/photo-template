@@ -19,6 +19,8 @@ export class PhotoService {
   }
 
   private randomDelay(): number {
-    return MIN_API_DELAY_MS + Math.random() * (MAX_API_DELAY_MS - MIN_API_DELAY_MS);
+    return Math.floor(
+      MIN_API_DELAY_MS + Math.random() * (MAX_API_DELAY_MS - MIN_API_DELAY_MS),
+    );
   }
 }

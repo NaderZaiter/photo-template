@@ -93,4 +93,13 @@ describe('FavoritesService', () => {
 
     expect(createService().favorites()).toEqual([{ id: 'a' }]);
   });
+
+  it('should keep in-memory favorites when localStorage.setItem throws', () => {
+    const service = createService();
+    spyOn(localStorage, 'setItem').and.throwError('QuotaExceededError');
+
+    expect(service.add({ id: 'a' })).toBeTrue();
+    expect(service.favorites()).toEqual([{ id: 'a' }]);
+    expect(service.has('a')).toBeTrue();
+  });
 });

@@ -8,8 +8,12 @@ import { FavoritesService } from '../../core/services/favorites.service';
 import { Photo } from '../../core/models/photo.model';
 
 class NoopIntersectionObserver {
-  public observe(): void {}
-  public disconnect(): void {}
+  public observe(): void {
+    return undefined;
+  }
+  public disconnect(): void {
+    return undefined;
+  }
 }
 
 describe('PhotosPageComponent', () => {

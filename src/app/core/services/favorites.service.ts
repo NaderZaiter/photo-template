@@ -61,6 +61,10 @@ export class FavoritesService {
   }
 
   private persist(): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.favoritesSignal()));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.favoritesSignal()));
+    } catch {
+      // Keep in-memory state if storage is unavailable.
+    }
   }
 }
